@@ -10,6 +10,7 @@ public strictfp class RobotPlayer {
     **/
     @SuppressWarnings("unused")
     static MapLocation farmingBase = startfarmingBase();
+    static float squareRadius;
     public static void run(RobotController rc) throws GameActionException {
 
         // This is the RobotController object. You use it to perform actions from this robot,
@@ -46,7 +47,12 @@ public strictfp class RobotPlayer {
                 //Defences
 
                 //Farming
-
+                if(rc.canMove(farmingBase)){
+                    rc.move(farmingBase);
+                }else if(rc.getLocation() != farmingBase){
+                    rc.move(randomDirection());
+                }else if(rc.canHireGardener(new Direction())){
+                }
                 //compunction
 
 
@@ -85,22 +91,6 @@ public strictfp class RobotPlayer {
 
             // Try/catch blocks stop unhandled exceptions, which cause your robot to explode
             try {
-                float farmingRows = 1.02F;
-                float farmingCollum = 1.01F;
-                if(rc.getLocation().x == farmingBase.x || rc.getLocation().x == farmingBase.x + farmingRows ) {
-                    Direction upperRow = new Direction(rc.getLocation().x,rc.getLocation().y + 1);
-                    Direction lowerRow = new Direction(rc.getLocation().x,rc.getLocation().y - 1);
-                    if(rc.getLocation().y != farmingBase.y) {
-                        rc.tryMove(new Direction(farmingBase.x,farmingBase.y + farmingCollum));
-                    }
-                        if (rc.canPlantTree(upperRow)) {
-                            rc.plantTree(upperRow);
-                        } else if (rc.canPlantTree(lowerRow)) {
-                            rc.plantTree(lowerRow);
-                        }
-                }else{
-                    rc.tryMove(farmingBase);
-                }
 
                 /*reference
                 // Listen for home archon's location
@@ -316,7 +306,13 @@ public strictfp class RobotPlayer {
         }
         farmX = farmX/original.length + (float)((Math.random() * 20) + 10);
         farmY = farmY/original.length + (float)((Math.random() * 20) + 10);
-
+        if(original.length == 1){
+            squareRadius = 0;
+        }else if(original.length == 2){
+            squareRadius = 4;
+        }else{
+            squareRadius = 5;
+        }
         return new MapLocation(farmX,farmY);
     }
 }
