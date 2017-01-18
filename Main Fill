@@ -9,8 +9,6 @@ public strictfp class RobotPlayer {
      * If this method returns, the robot dies!
     **/
     @SuppressWarnings("unused")
-    static int farmingRows;
-    static int farmingCollum;
     static MapLocation farmingBase = startfarmingBase();
     public static void run(RobotController rc) throws GameActionException {
 
@@ -87,13 +85,18 @@ public strictfp class RobotPlayer {
 
             // Try/catch blocks stop unhandled exceptions, which cause your robot to explode
             try {
-                if(rc.getLocation().x == farmingBase.x + farmingRows && rc.getLocation().y == farmingBase.y + farmingCollum) {
+                float farmingRows = 1.02F;
+                float farmingCollum = 1.01F;
+                if(rc.getLocation().x == farmingBase.x || rc.getLocation().x == farmingBase.x + farmingRows ) {
                     Direction upperRow = new Direction(rc.getLocation().x,rc.getLocation().y + 1);
                     Direction lowerRow = new Direction(rc.getLocation().x,rc.getLocation().y - 1);
-                        if(rc.canPlantTree(upperRow)){
-                            rc.canPlantTree(upperRow);
-                        }else if(rc.canPlantTree(lowerRow)){
-                            rc.canPlantTree(lowerRow);
+                    if(rc.getLocation().y != farmingBase.y) {
+                        rc.move(new Direction(farmingBase.x,farmingBase.y + farmingCollum));
+                    }
+                        if (rc.canPlantTree(upperRow)) {
+                            rc.plantTree(upperRow);
+                        } else if (rc.canPlantTree(lowerRow)) {
+                            rc.plantTree(lowerRow);
                         }
                 }else{
                     rc.move(farmingBase);
