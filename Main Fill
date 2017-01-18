@@ -91,7 +91,7 @@ public strictfp class RobotPlayer {
                     Direction upperRow = new Direction(rc.getLocation().x,rc.getLocation().y + 1);
                     Direction lowerRow = new Direction(rc.getLocation().x,rc.getLocation().y - 1);
                     if(rc.getLocation().y != farmingBase.y) {
-                        rc.move(new Direction(farmingBase.x,farmingBase.y + farmingCollum));
+                        rc.tryMove(new Direction(farmingBase.x,farmingBase.y + farmingCollum));
                     }
                         if (rc.canPlantTree(upperRow)) {
                             rc.plantTree(upperRow);
@@ -99,7 +99,7 @@ public strictfp class RobotPlayer {
                             rc.plantTree(lowerRow);
                         }
                 }else{
-                    rc.move(farmingBase);
+                    rc.tryMove(farmingBase);
                 }
 
                 /*reference
