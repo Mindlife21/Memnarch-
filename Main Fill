@@ -97,7 +97,7 @@ public strictfp class RobotPlayer {
                 //Farming
 
                 if(rc.getLocation().x >= farmingBase.x + squareRadius && rc.getLocation().x <= farmingBase.x -squareRadius && rc.getLocation().y >= farmingBase.y + squareRadius && rc.getLocation().x <= farmingBase.y -squareRadius){
-                    rc.move(farmingBase);
+                    tryMove(farmingBase);
 
                 }else if(rc.canMove(farmingBase)) {
 
@@ -625,6 +625,9 @@ public strictfp class RobotPlayer {
 
         return new MapLocation(farmX,farmY);
 
+    }
+    static Direction dirFarmingBase(){
+        return new Direction(farmingBase.x,farmingBase.y);
     }
 
 }
